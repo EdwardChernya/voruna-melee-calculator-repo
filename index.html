@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voruna 2 Billion Damage Calculator</title>
+
+  <style>
+    /* Removes arrow spinners from Chrome, Safari, Edge, and Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Removes arrow spinners from Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    background: #0a0a0c; /* Deep obsidian black background */
+    color: #e4e4e7; 
+    max-width: 600px; 
+    margin: 40px auto; 
+    padding: 20px; 
+}
+.card { 
+    background: #111115; /* Charcoal black container card */
+    padding: 30px; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7); 
+    border: 1px solid #27272a; 
+}
+h2 { 
+    margin-top: 0; 
+    margin-bottom: 5px;
+    color: #ef4444; /* Blood red title text */
+    font-size: 24px; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.video-link {
+    display: inline-block;
+    color: #44a561; /* Soft red text link */
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 25px;
+    transition: color 0.2s, text-shadow 0.2s;
+}
+.video-link:hover {
+    color: #34d44a;
+    text-decoration: underline;
+}
+.input-group { 
+    margin-bottom: 20px; 
+}
+label { 
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: 600; 
+    color: #a1a1aa; 
+    font-size: 13px; 
+    text-transform: uppercase; 
+    letter-spacing: 0.75px; 
+}
+input[type="number"], select { 
+    width: 100%; 
+    padding: 12px; 
+    border-radius: 6px; 
+    border: 1px solid #3f3f46; 
+    background: #18181b; /* Pitch black inputs */
+    color: #fff; 
+    font-size: 16px; 
+    box-sizing: border-box; 
+    transition: border-color 0.2s;
+}
+input:focus, select:focus { 
+    border-color: #ef4444; /* Crimson glow highlight border on click */
+    outline: none; 
+}
+.checkbox-group {
+    background: #18181b;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #27272a;
+    margin-bottom: 20px;
+}
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+.checkbox-container:last-child {
+    margin-bottom: 0;
+}
+.checkbox-container input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    cursor: pointer;
+    accent-color: #ef4444; /* Crimson checkbox interior */
+}
+.checkbox-label {
+    font-size: 14px;
+    color: #d4d4d8;
+    font-weight: normal;
+    text-transform: none;
+    letter-spacing: normal;
+}
+.result-box { 
+    background: #18181b; 
+    padding: 25px; 
+    border-radius: 8px; 
+    border-left: 5px solid #dc2626; /* Deep crimson accent border */
+    margin-top: 25px; 
+    text-align: center; 
+}
+.result-label { 
+    font-size: 13px; 
+    text-transform: uppercase; 
+    color: #ef4444; /* High-roll crimson title */
+    letter-spacing: 1px; 
+    font-weight: 600;
+}
+.result-value { 
+    font-size: 34px; 
+    font-weight: 800; 
+    color: #f43f5e; /* Glowing red main output value */
+    margin-top: 5px; 
+    word-break: break-all; 
+}
+.crit-breakdown-box {
+    margin-top: 20px;
+    background: #141417;
+    border: 1px solid #27272a;
+    border-radius: 8px;
+    padding: 15px;
+}
+.breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #a1a1aa;
+}
+.breakdown-row:last-child {
+    margin-bottom: 0;
+}
+.breakdown-row strong {
+    color: #f4f4f5;
+}
+.formula-box { 
+    margin-top: 30px; 
+    padding: 15px; 
+    background: #0b0b0d; 
+    border-radius: 6px; 
+    border: 1px solid #27272a; 
+    font-family: monospace; 
+    font-size: 13px; 
+    color: #52525b; 
+    white-space: pre-wrap; 
+    word-break: break-all; 
+}
+.formula-title { 
+    font-weight: bold; 
+    color: #71717a; 
+    font-family: sans-serif; 
+    margin-bottom: 5px; 
+    font-size: 12px; 
+    text-transform: uppercase; 
+}
+
+  </style>
+
+  
+</head>
+<body>
+  <div class="card">
+    <h2>Voruna Damage Calculator</h2>
+    <!-- YouTube Video Link -->
+    <a href="YOUR_YOUTUBE_VIDEO_LINK_HERE" class="video-link" target="_blank">▶ Watch the Full Build Video</a>
+    
+    <div class="input-group">
+        <label for="damageInput">Heavy attack Base Damage (x)</label>
+        <input type="number" id="damageInput" value="900" oninput="calculateDamage()">
+    </div>
+
+    <div class="input-group">
+        <label for="ccInput">Base Crit Chance %</label>
+        <input type="number" id="ccInput" value="19" step="1" oninput="calculateDamage()">
+    </div>
+    
+    <div class="input-group">
+        <label for="critInput">Base Crit Multiplier (y)</label>
+        <input type="number" id="critInput" value="2.0" step="0.1" oninput="calculateDamage()">
+    </div>
+
+    <div class="input-group">
+        <label for="shardInput">Tau Violet Archon Shards (z)</label>
+        <select id="shardInput" onchange="calculateDamage()">
+            <option value="0">No Shards (+0%)</option>
+            <option value="1">1 Shard (+74%)</option>
+            <option value="2">2 Shards (+148%)</option>
+            <option value="3">3 Shards (+222%)</option>
+            <option value="4">4 Shards (+296%)</option>
+            <option value="5">5 Shards (+370%)</option>
+        </select>
+    </div>
+
+    <!-- Toggles Section -->
+    <div class="checkbox-group">
+        <label class="checkbox-container">
+            <input type="checkbox" id="factionMod" onchange="calculateDamage()">
+            <span class="checkbox-label">Primed Faction Mod</span>
+        </label>
+        
+        <label class="checkbox-container">
+            <input type="checkbox" id="corrosiveStrip" onchange="calculateDamage()">
+            <span class="checkbox-label">Enemy has armor (40.24% DR after 10 corrosive stacks)</span>
+        </label>
+    </div>
+    
+    <!-- Big Final Output Card (Always High Roll) -->
+    <div class="result-box">
+        <div id="resultLabel" class="result-label">Final Damage (0% Highroll)</div>
+        <div id="resultOutput" class="result-value">0</div>
+    </div>
+
+    <!-- Clean Secondary Breakdown Panel -->
+    <div class="crit-breakdown-box">
+        <div class="breakdown-row"><span>Modded Crit Chance + 125% flat (from voruna and puncture):</span> <strong id="totalCC">0%</strong></div>
+        <div class="breakdown-row"><span>Guaranteed Crit Tier:</span> <strong id="lowTierDmg">0</strong></div>
+    </div>
+
+    <div class="formula-box">
+        <div class="formula-title">Nerd formula:</div>
+        <span id="formulaText">x * (1 + 1.65 + 1.2 + 0.8 * 13) * (1 + 6.09) * 3 * (1 + crit_tier * (2 * (y * (1 + 2.05 + z) + 12.72) - 1)) * 12 * 4.25 * faction * (1 - enemy_dr)</span>
+    </div>
+</div>
+
+
+  <script>
+    function calculateDamage() {
+    // 1. Grab base numerical inputs
+    let x = parseFloat(document.getElementById('damageInput').value) || 0;
+    let baseCC = parseFloat(document.getElementById('ccInput').value) || 0;
+    let y = parseFloat(document.getElementById('critInput').value) || 0;
+    
+    // 2. Calculate Final Modded Critical Chance Decimal 
+    let finalCCDecimal = (baseCC / 100) * 8 + 1.25;
+    
+    // Determine low and high crit tiers and the dynamic chance remainder
+    let lowTier = Math.floor(finalCCDecimal);
+    let highTier = lowTier + 1;
+    let highRollChance = (finalCCDecimal - lowTier) * 100;
+    
+    // 3. Violet Archon Shards (z)
+    let shardCount = parseInt(document.getElementById('shardInput').value) || 0;
+    let z = shardCount * 0.74; 
+    
+    // 4. Checkboxes (Faction & Corrosive Armor Reduction)
+    let isFactionChecked = document.getElementById('factionMod').checked;
+    let factionMultiplier = isFactionChecked ? 1.55 : 1.3;
+    
+    let isCorrosiveChecked = document.getElementById('corrosiveStrip').checked;
+    let enemyDrFactor = isCorrosiveChecked ? (1 - 0.4024) : 1;
+    
+    // 5. Run Arithmetic Package
+    let baseStructure = x * (1 + 1.65 + 1.2 + 0.8 * 13) * (1 + 6.09) * 3 * 12 * 4.25 * factionMultiplier * enemyDrFactor;
+    let insideCritMod = (2 * (y * (1 + 2.05 + z) + 12.72) - 1);
+    
+    let lowTierDamage = baseStructure * (1 + lowTier * insideCritMod);
+    let highTierDamage = baseStructure * (1 + highTier * insideCritMod);
+    
+    // 6. Push calculations to screen
+    // Top Main Panel: Updates the header with the dynamic percentage string and shows the max hit damage
+    document.getElementById('resultLabel').innerText = "Final Damage (" + highRollChance.toFixed(1) + "% Highroll Tier " + highTier + ")";
+    document.getElementById('resultOutput').innerText = Math.round(highTierDamage).toLocaleString();
+    
+    // Bottom Secondary Panel: Shows the Total Modded CC and the lower fallback tier baseline damage
+    document.getElementById('totalCC').innerText = (finalCCDecimal * 100).toFixed(0) + "%";
+    document.getElementById('lowTierDmg').innerText = Math.round(lowTierDamage).toLocaleString() + " (Tier " + lowTier + ")";
+}
+
+// Run layout immediately on load
+calculateDamage();
+
+  </script>
+</body>
+</html>
